@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <Version>2.1.1</Version>
-    <PackageProjectUrl>https://github.com/madebykrol/InteractR.Resolver.StructureMap</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/madebykrol/InteractR.Resolver.Lamar</PackageProjectUrl>
     <Authors>Kristoffer Olsson</Authors>
     <AssemblyVersion>2.1.1.0</AssemblyVersion>
     <FileVersion>2.1.1.0</FileVersion>
