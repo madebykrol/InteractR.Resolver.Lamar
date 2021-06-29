@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using InteractR.Interactor;
 using Lamar;
@@ -22,6 +23,15 @@ namespace InteractR.Resolver.Lamar
         public IReadOnlyList<IMiddleware<TUseCase, TOutputPort>> ResolveMiddleware<TUseCase, TOutputPort>(TUseCase useCase) 
             where TUseCase : IUseCase<TOutputPort> 
                 => _context.GetAllInstances<IMiddleware<TUseCase, TOutputPort>>().ToList();
+
+        public IReadOnlyList<IMiddleware<TUseCase>> ResolveMiddleware<TUseCase>()
+        {
+            var types = typeof(TUseCase).GetBaseTypes().ToList();
+            var middlewareType = typeof(IMiddleware<>);
+
+            return types.SelectMany(type => _context.GetAllInstances(middlewareType.MakeGenericType(type)).Cast<IMiddleware<TUseCase>>())
+                .Where(instance => instance != null).ToList();
+        }
 
         public IReadOnlyList<IMiddleware> ResolveGlobalMiddleware() 
             => _context.GetAllInstances<IMiddleware>().ToList();

@@ -42,6 +42,7 @@ namespace InteractR.Resolver.Lamar.Tests
                 .ReturnsForAnyArgs(x => new UseCaseResult(true))
                 .AndDoes(x => x.Arg<Func<MockUseCase, Task<UseCaseResult>>>().Invoke(x.Arg<MockUseCase>()));
 
+
             var container = new Container(c =>
             {
                 c.For<IInteractor<MockUseCase, IMockOutputPort>>().Use(_useCaseInteractor);
@@ -54,7 +55,7 @@ namespace InteractR.Resolver.Lamar.Tests
         }
 
         [Test]
-        public async Task Test_StructureMap_Resolver()
+        public async Task Test_Lamar_Resolver()
         {
             await _interactorHub.Execute(new MockUseCase(), (IMockOutputPort)new MockOutputPort());
             await _useCaseInteractor.Received().Execute(Arg.Any<MockUseCase>(), Arg.Any<IMockOutputPort>(), Arg.Any<CancellationToken>());
@@ -66,6 +67,40 @@ namespace InteractR.Resolver.Lamar.Tests
             await _interactorHub.Execute(new MockUseCase(), (IMockOutputPort)new MockOutputPort());
             await _middleware2.ReceivedWithAnyArgs().Execute(Arg.Any<MockUseCase>(), Arg.Any<IMockOutputPort>(), Arg.Any<Func<MockUseCase, Task<UseCaseResult>>>(),
                 Arg.Any<CancellationToken>());
+        }
+
+        [Test]
+        public void Test_GenericMiddleware_InterfaceOnClass()
+        {
+            var container = new Container(c =>
+            {
+                c.For<IInteractor<MockUseCase, IMockOutputPort>>().Use(_useCaseInteractor);
+                c.For<IMiddleware<IHasPolicy>>().Use<MockMiddleWare>();
+                c.IncludeRegistry<ResolverModule>();
+            });
+
+            var interactorHub = container.GetInstance<IInteractorHub>();
+            Assert.ThrowsAsync<MockException>(async () =>
+            {
+                await interactorHub.Execute(new MockUseCase(), (IMockOutputPort)new MockOutputPort());
+            });
+        }
+
+        [Test]
+        public void Test_GenericMiddleware_InterfaceOnBaseClass()
+        {
+            var container = new Container(c =>
+            {
+                c.For<IInteractor<MockSubUseCase, IMockOutputPort>>().Use(_useCaseInteractor);
+                c.For<IMiddleware<IHasPolicy>>().Use<MockMiddleWare>();
+                c.IncludeRegistry<ResolverModule>();
+            });
+
+            var interactorHub = container.GetInstance<IInteractorHub>();
+            Assert.ThrowsAsync<MockException>(async () =>
+            {
+                await interactorHub.Execute(new MockSubUseCase(), (IMockOutputPort)new MockOutputPort());
+            });
         }
     }
 }
