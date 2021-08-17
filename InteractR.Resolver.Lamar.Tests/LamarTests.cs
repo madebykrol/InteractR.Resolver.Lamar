@@ -57,14 +57,14 @@ namespace InteractR.Resolver.Lamar.Tests
         [Test]
         public async Task Test_Lamar_Resolver()
         {
-            await _interactorHub.Execute(new MockUseCase(), (IMockOutputPort)new MockOutputPort());
+            await _interactorHub.Execute(new MockUseCase(), new MockOutputPort());
             await _useCaseInteractor.Received().Execute(Arg.Any<MockUseCase>(), Arg.Any<IMockOutputPort>(), Arg.Any<CancellationToken>());
         }
 
         [Test]
         public async Task Test_Pipeline()
         {
-            await _interactorHub.Execute(new MockUseCase(), (IMockOutputPort)new MockOutputPort());
+            await _interactorHub.Execute(new MockUseCase(), new MockOutputPort());
             await _middleware2.ReceivedWithAnyArgs().Execute(Arg.Any<MockUseCase>(), Arg.Any<IMockOutputPort>(), Arg.Any<Func<MockUseCase, Task<UseCaseResult>>>(),
                 Arg.Any<CancellationToken>());
         }
@@ -82,7 +82,7 @@ namespace InteractR.Resolver.Lamar.Tests
             var interactorHub = container.GetInstance<IInteractorHub>();
             Assert.ThrowsAsync<MockException>(async () =>
             {
-                await interactorHub.Execute(new MockUseCase(), (IMockOutputPort)new MockOutputPort());
+                await interactorHub.Execute(new MockUseCase(), new MockOutputPort());
             });
         }
 
@@ -99,7 +99,7 @@ namespace InteractR.Resolver.Lamar.Tests
             var interactorHub = container.GetInstance<IInteractorHub>();
             Assert.ThrowsAsync<MockException>(async () =>
             {
-                await interactorHub.Execute(new MockSubUseCase(), (IMockOutputPort)new MockOutputPort());
+                await interactorHub.Execute(new MockSubUseCase(), new MockOutputPort());
             });
         }
     }
