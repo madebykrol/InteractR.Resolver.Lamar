@@ -21,5 +21,6 @@ Or you can use the provided ServiceRegistry extesion method
 services.AddInteractr()
 ```
 
-# Breaking changes.
-This package nolonger ships with a ResolverModule - Instead use 'AddInteractr' extension method 
+# Breaking changes
+## 7.0.0
+This package no longer ships with a ResolverModule - Instead use 'AddInteractr' extension method
