@@ -1,11 +1,12 @@
 # InteractR.Resolver.Lamar
 For documentation see [InteractR](https://github.com/madebykrol/InteractR)
 
-Built for Lamar 5.04 for other versions please use this repository for reference and roll your own.
+Built for Lamar 7.0.0 for other versions please use this repository for reference and roll your own.
+
 
 Install from nuget.
 ```PowerShell
-PM > Install-Package InteractR.Resolver.Lamar -Version 3.0.0
+PM > Install-Package InteractR.Resolver.Lamar -Version 4.0.0
 ```
 
 # Usage 
@@ -15,10 +16,10 @@ For<IResolver>().Use(context => new StructureMapResolver(context));
 For<IInteractorHub>().Use<Hub>();
 ```
 
-Or you can use the provided registry
+Or you can use the provided ServiceRegistry extesion method
 ```Csharp
- var container = new Container(c =>
-{
-    c.IncludeRegistry<ResolverModule>();
-});
+services.AddInteractr()
 ```
+
+# Breaking changes.
+This package nolonger ships with a ResolverModule - Instead use 'AddInteractr' extension method 
