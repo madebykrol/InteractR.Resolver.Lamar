@@ -48,7 +48,7 @@ namespace InteractR.Resolver.Lamar.Tests
                 c.For<IInteractor<MockUseCase, IMockOutputPort>>().Use(_useCaseInteractor);
                 c.For<IMiddleware<MockUseCase, IMockOutputPort>>().Use(_middleware1);
                 c.For<IMiddleware<MockUseCase, IMockOutputPort>>().Use(_middleware2);
-                c.UseInteractr();
+                c.AddInteractr();
             });
 
             _interactorHub = container.GetInstance<IInteractorHub>();
@@ -76,7 +76,7 @@ namespace InteractR.Resolver.Lamar.Tests
             {
                 c.For<IInteractor<MockUseCase, IMockOutputPort>>().Use(_useCaseInteractor);
                 c.For<IMiddleware<IHasPolicy>>().Use<MockMiddleWare>();
-                c.UseInteractr();
+                c.AddInteractr();
             });
 
             var interactorHub = container.GetInstance<IInteractorHub>();
@@ -93,7 +93,7 @@ namespace InteractR.Resolver.Lamar.Tests
             {
                 c.For<IInteractor<MockSubUseCase, IMockOutputPort>>().Use(_useCaseInteractor);
                 c.For<IMiddleware<IHasPolicy>>().Use<MockMiddleWare>();
-                c.UseInteractr();
+                c.AddInteractr();
             });
 
             var interactorHub = container.GetInstance<IInteractorHub>();
