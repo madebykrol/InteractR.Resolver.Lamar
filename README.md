@@ -22,5 +22,5 @@ services.AddInteractr()
 ```
 
 # Breaking changes
-## 7.0.0
+## 4.0.0
 This package no longer ships with a ResolverModule - Instead use 'AddInteractr' extension method
