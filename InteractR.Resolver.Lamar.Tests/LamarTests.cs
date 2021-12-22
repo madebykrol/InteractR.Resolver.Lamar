@@ -65,42 +65,44 @@ namespace InteractR.Resolver.Lamar.Tests
         public async Task Test_Pipeline()
         {
             await _interactorHub.Execute(new MockUseCase(), new MockOutputPort());
-            await _middleware2.ReceivedWithAnyArgs().Execute(Arg.Any<MockUseCase>(), Arg.Any<IMockOutputPort>(), Arg.Any<Func<MockUseCase, Task<UseCaseResult>>>(),
+            await _middleware2.ReceivedWithAnyArgs(1).Execute(Arg.Any<MockUseCase>(), Arg.Any<IMockOutputPort>(), Arg.Any<Func<MockUseCase, Task<UseCaseResult>>>(),
                 Arg.Any<CancellationToken>());
         }
 
         [Test]
-        public void Test_GenericMiddleware_InterfaceOnClass()
+        public async Task Test_GenericMiddleware_InterfaceOnClass()
         {
+            var middleware = new MockMiddleWare();
             var container = new Container(c =>
             {
                 c.For<IInteractor<MockUseCase, IMockOutputPort>>().Use(_useCaseInteractor);
-                c.For<IMiddleware<IHasPolicy>>().Use<MockMiddleWare>();
+                c.For<IMiddleware<IHasPolicy>>().Use(middleware).Singleton();
                 c.AddInteractr();
             });
 
             var interactorHub = container.GetInstance<IInteractorHub>();
-            Assert.ThrowsAsync<MockException>(async () =>
-            {
-                await interactorHub.Execute(new MockUseCase(), new MockOutputPort());
-            });
+
+            _ = await interactorHub.Execute(new MockUseCase(), new MockOutputPort());
+
+            Assert.AreEqual(1, middleware.Run);
         }
 
         [Test]
-        public void Test_GenericMiddleware_InterfaceOnBaseClass()
+        public async Task Test_GenericMiddleware_InterfaceOnBaseClass()
         {
+            var middleware = new MockMiddleWare();
             var container = new Container(c =>
             {
                 c.For<IInteractor<MockSubUseCase, IMockOutputPort>>().Use(_useCaseInteractor);
-                c.For<IMiddleware<IHasPolicy>>().Use<MockMiddleWare>();
+                c.For<IMiddleware<IHasPolicy>>().Use(middleware).Singleton();
                 c.AddInteractr();
             });
 
             var interactorHub = container.GetInstance<IInteractorHub>();
-            Assert.ThrowsAsync<MockException>(async () =>
-            {
-                await interactorHub.Execute(new MockSubUseCase(), new MockOutputPort());
-            });
+
+            _ = await interactorHub.Execute(new MockSubUseCase(), new MockOutputPort());
+
+            Assert.AreEqual(1, middleware.Run);
         }
     }
 }
