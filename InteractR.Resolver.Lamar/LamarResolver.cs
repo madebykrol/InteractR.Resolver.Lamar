@@ -29,8 +29,16 @@ namespace InteractR.Resolver.Lamar
             var types = typeof(TUseCase).GetBaseTypes().ToList();
             var middlewareType = typeof(IMiddleware<>);
 
-            return types.SelectMany(type => _context.GetAllInstances(middlewareType.MakeGenericType(type)).Cast<IMiddleware<TUseCase>>())
-                .Where(instance => instance != null).ToList();
+            var middlewares = types.SelectMany(type =>
+                {
+                    var instances = _context.GetAllInstances(middlewareType.MakeGenericType(type))
+                            .Cast<IMiddleware<TUseCase>>();
+
+                    return instances;
+                })
+                .Where(instance => instance != null).Distinct().ToList();
+
+            return middlewares;
         }
 
         public IReadOnlyList<IMiddleware> ResolveGlobalMiddleware() 
