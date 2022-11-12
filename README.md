@@ -1,12 +1,12 @@
 # InteractR.Resolver.Lamar
 For documentation see [InteractR](https://github.com/madebykrol/InteractR)
 
-Built for Lamar 7.0.0 for other versions please use this repository for reference and roll your own.
+Built for Lamar 8.1.0 for other versions please use this repository for reference and roll your own.
 
 
 Install from nuget.
 ```PowerShell
-PM > Install-Package InteractR.Resolver.Lamar -Version 4.1.0
+PM > Install-Package InteractR.Resolver.Lamar -Version 5.0.0
 ```
 
 # Usage 
