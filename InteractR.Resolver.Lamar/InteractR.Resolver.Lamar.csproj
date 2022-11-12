@@ -1,19 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net5;net6</TargetFrameworks>
-    <Version>4.0.1</Version>
+    <TargetFrameworks>net5;net6;net7</TargetFrameworks>
+    <Version>5.0.0</Version>
     <PackageProjectUrl>https://github.com/madebykrol/InteractR.Resolver.Lamar</PackageProjectUrl>
     <Authors>Kristoffer Olsson</Authors>
-    <AssemblyVersion>4.0.1.0</AssemblyVersion>
-    <FileVersion>4.0.1.0</FileVersion>
+    <AssemblyVersion>5.0.0.0</AssemblyVersion>
+    <FileVersion>5.0.0.0</FileVersion>
     <Company>Kristoffer Olsson</Company>
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="InteractR" Version="4.0.0" />
-    <PackageReference Include="Lamar" Version="7.0.0" />
+    <PackageReference Include="InteractR" Version="5.0.0" />
+    <PackageReference Include="Lamar" Version="8.1.0" />
   </ItemGroup>
 
 </Project>
