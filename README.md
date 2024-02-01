@@ -6,7 +6,7 @@ Built for Lamar 8.1.0 for other versions please use this repository for referenc
 
 Install from nuget.
 ```PowerShell
-PM > Install-Package InteractR.Resolver.Lamar -Version 5.0.0
+PM > Install-Package InteractR.Resolver.Lamar -Version 8.0.0
 ```
 
 # Usage 
