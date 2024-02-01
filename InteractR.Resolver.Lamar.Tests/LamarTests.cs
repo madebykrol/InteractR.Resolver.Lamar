@@ -84,7 +84,7 @@ namespace InteractR.Resolver.Lamar.Tests
 
             _ = await interactorHub.Execute(new MockUseCase(), new MockOutputPort());
 
-            Assert.AreEqual(1, middleware.Run);
+            Assert.That(middleware.Run, Is.EqualTo(1));
         }
 
         [Test]
@@ -102,7 +102,7 @@ namespace InteractR.Resolver.Lamar.Tests
 
             _ = await interactorHub.Execute(new MockSubUseCase(), new MockOutputPort());
 
-            Assert.AreEqual(1, middleware.Run);
+            Assert.That(middleware.Run, Is.EqualTo(1));
         }
     }
 }
